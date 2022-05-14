@@ -114,7 +114,7 @@ jobs:
           console.log(`body: ${body}`)
           const images = body.tags.map(t => `ghcr.io/${{ inputs.image_name }}:${t}` )
           console.log(`images: ${images}`)
-          const each_arch_images = images.filter(i => i.includes(targetImageName))
+          const each_arch_images = images.filter(i => i.includes(targetImageName) && i !== targetImageName)
           console.log(`each arch images ${each_arch_images}`)
           await $`docker manifest create ${targetImageName} ${each_arch_images}`
           await $`docker manifest push ${targetImageName}`
