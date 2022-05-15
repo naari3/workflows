@@ -72,11 +72,12 @@ jobs:
       - run: echo "target_arch=$(echo ${{ matrix.target }} | awk -F/ '{print $NF}')" >> $GITHUB_ENV
 
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
           platforms: ${{ matrix.target }}
+          cache-from: type=gha
           tags: |
             ${{ needs.info.outputs.base_image }}-${{ env.target_arch }}
   manifest:
