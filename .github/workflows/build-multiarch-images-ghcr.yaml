@@ -117,7 +117,9 @@ jobs:
           console.log(`images: ${images}`)
           const each_arch_images = images.filter(i => i.includes(targetImageName) && i !== targetImageName)
           console.log(`each arch images ${each_arch_images}`)
+          console.log(`create ${targetImageName}`)
           await $`docker manifest create ${targetImageName} ${each_arch_images}`
+          console.log(`push ${targetImageName}`)
           await $`docker manifest push ${targetImageName}`
           if ("${{ inputs.tag_name }}" != "latest") {
             await $`docker manifest create ghcr.io/${{ inputs.image_name }}:latest ${each_arch_images}`
